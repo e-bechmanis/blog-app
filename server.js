@@ -1,4 +1,5 @@
 const path = require('path');
+var blog = require('blog-service.js');
 var express = require('express');
 var app = express();
 
@@ -19,6 +20,11 @@ app.get('/', (req,res) => {
 // Returns HTML "About" form
 app.get('/about', (req,res) => {
     res.sendFile(path.join(__dirname + "/views/about.html"));
+});
+
+// Returns HTML "Blog" form
+app.get('/blog', (req,res) => {
+    res.sendFile(path.join(__dirname + "/data/posts.json"));
 });
 
 // setup http server to listen on HTTP_PORT
