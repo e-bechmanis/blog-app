@@ -22,9 +22,9 @@ app.get('/about', (req,res) => {
     res.sendFile(path.join(__dirname + "/views/about.html"));
 });
 
-// Returns HTML "Blog" form
+// Returns HTML "Blog"
 app.get('/blog', (req,res) => {
-    res.sendFile(path.join(__dirname + "/data/posts.json"));
+    res.send("TODO get all posts who have published==true");
 });
 
 // setup http server to listen on HTTP_PORT
