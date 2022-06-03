@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Odia:wght@300;400;500&family=Fira+Code:wght@300;400;500&family=Quantico:ital,wght@0,700;1,400&display=swap');
+@import url('../node_modules/font-awesome/css/font-awesome.min.css');
+
+#name{
+    color: rgb(29, 86, 245);
+}
+
+h2{
+    color: rgb(8, 42, 138);
+}
+
+.navbar-default .navbar-brand{
+    color: rgb(8, 42, 138);
+    font-family: 'Quantico', sans-serif;
+    font-weight: 700;
+}
+
+.navbar-default{
+    background-color: rgb(201, 223, 250);
+}
+
+.navbar-default .navbar-nav > li > a{
+    color: rgb(8, 42, 138);
+}
+
+.row p{
+    color: rgb(71, 70, 70);
+}
+
+.fa-solid fa-calendar-lines-pen fa-2x{
+    color: rgb(8, 42, 138);
+}
