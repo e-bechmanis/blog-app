@@ -5,7 +5,7 @@
 * 
 *  Name: Elena Bechmanis     Student ID: 165090218      Date: 02.06.2022
 *
-*  Online (Heroku) URL: ________________________________________________________
+*  Online (Heroku) URL: https://still-woodland-36555.herokuapp.com/
 *
 *  GitHub Repository URL: ______________________________________________________
 *
