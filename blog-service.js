@@ -12,14 +12,12 @@ module.exports.initialize = function(){
             reject("Could not open the first file");
         }
         else{
-            console.log("First JSON file opened successfully");
             posts = JSON.parse(data);
             fs.readFile('./data/categories.json', 'utf8', (err, cat) =>{
                 if (err) {
                     reject("Could not open the second file");
                 }
                 else{
-                    console.log("Second JSON file opened successfully");
                     categories = JSON.parse(cat);
                     resolve(data, cat);
                 }

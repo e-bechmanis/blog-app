@@ -59,7 +59,7 @@ app.get('/categories', (req,res) => {
 
 //The 404 Route
 app.get('*', function(req, res){
-    res.status(404).send('Future 404 page');
+    res.sendFile(path.join(__dirname + "/views/404.html"));
   });
 
 // setup http server to listen on HTTP_PORT

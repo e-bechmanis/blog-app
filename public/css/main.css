@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Anek+Odia:wght@300;400;500&family=Fira+Code:wght@300;400;500&family=Quantico:ital,wght@0,700;1,400&display=swap');
-@import url('../node_modules/font-awesome/css/font-awesome.min.css');
 
 #name{
     color: rgb(29, 86, 245);
 }
 
-h2{
+section h2{
     color: rgb(8, 42, 138);
 }
 
@@ -16,7 +15,7 @@ h2{
 }
 
 .navbar-default{
-    background-color: rgb(201, 223, 250);
+    background-color: rgb(207, 226, 248);
 }
 
 .navbar-default .navbar-nav > li > a{
@@ -27,6 +26,18 @@ h2{
     color: rgb(71, 70, 70);
 }
 
-.fa-solid fa-calendar-lines-pen fa-2x{
-    color: rgb(8, 42, 138);
+aside h2{
+    color: rgb(211, 72, 17);
+}
+
+#not-found{
+    background-color:rgb(14, 13, 13);
+    font-family: 'Quantico', sans-serif;
+    height: 100%;
+    color: whitesmoke;
+    font-weight: 400;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 200px;
+    text-align: center;
 }
