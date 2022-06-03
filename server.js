@@ -7,7 +7,7 @@
 *
 *  Online (Heroku) URL: https://still-woodland-36555.herokuapp.com/
 *
-*  GitHub Repository URL: ______________________________________________________
+*  GitHub Repository URL: https://github.com/e-bechmanis/web322-app
 *
 ********************************************************************************/ 
 
