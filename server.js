@@ -33,7 +33,12 @@ app.get('/', (req,res) => {
 
 // Returns HTML "About" form
 app.get('/about', (req,res) => {
-    res.sendFile(path.join(__dirname + "/views/about.html"));
+    res.sendFile(path.join(__dirname, '/views/addPost.html'));
+});
+
+// Returns HTML "Add post" form
+app.get('/posts/add', (req,res) => {
+    res.sendFile(path.join(__dirname, '/views/about.html'));
 });
 
 // Returns a JSON formatted string containing all of the posts where published == true
@@ -58,8 +63,8 @@ app.get('/categories', (req,res) => {
 });
 
 //The 404 Route
-app.get('*', function(req, res){
-    res.sendFile(path.join(__dirname + "/views/404.html"));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/404.html'));
   });
 
 // setup http server to listen on HTTP_PORT
