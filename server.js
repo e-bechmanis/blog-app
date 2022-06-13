@@ -3,7 +3,7 @@
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Elena Bechmanis     Student ID: 165090218      Date: 02.06.2022
+*  Name: Elena Bechmanis     Student ID: 165090218      Date: 12.06.2022
 *
 *  Online (Heroku) URL: https://still-woodland-36555.herokuapp.com/
 *
@@ -61,7 +61,17 @@ app.get('/blog', (req,res) => {
 
 // Returns a JSON formatted string containing all the posts within the posts.json file
 app.get('/posts', (req,res) => {
-    blog.getAllPosts()
+    if (req.query.category >= 1 || req.query.category <=5){
+        blog.getPostsByCategory(req.query.category)
+        .then((data)=>res.json(data))
+        .catch((error) => console.log({message: error}));
+    }
+    else if(){
+
+    }
+    else{
+        blog.getAllPosts()
+    }
     .then((data)=>res.json(data))
     .catch((error) => console.log("message: " + error));
 });
@@ -106,8 +116,9 @@ app.post('/posts/add', (req,res) => {
     
     function processPost(imageUrl){
     req.body.featureImage = imageUrl;
-    
-        // TODO: Process the req.body and add it as a new Blog Post before redirecting to /posts
+
+    // Process the req.body and add it as a new Blog Post before redirecting to /posts
+    blog.addPost(req.body).then(()=>res.redirect('/posts'));
     }     
 });
 
