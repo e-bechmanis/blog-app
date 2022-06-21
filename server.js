@@ -5,7 +5,7 @@
 * 
 *  Name: Elena Bechmanis     Student ID: 165090218      Date: 19.06.2022
 *
-*  Online (Heroku) URL: https://fathomless-ocean-19793.herokuapp.com/
+*  Online (Heroku) URL: https://still-woodland-36555.herokuapp.com/
 *
 *  GitHub Repository URL: https://github.com/e-bechmanis/web322-app
 *
