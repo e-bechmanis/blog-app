@@ -5,8 +5,8 @@ const { resolve } = require("path");
 let posts = new Array();
 let categories = new Array();
 
-module.exports.initialize = function(){
-    return new Promise(function(resolve, reject){
+module.exports.initialize = () => {
+    return new Promise((resolve, reject) => {
     fs.readFile('./data/posts.json', 'utf8', (err, data) => {
         if (err) {
             reject("Could not open the first file");
@@ -27,16 +27,16 @@ module.exports.initialize = function(){
 })
 }
 
-module.exports.getAllPosts = function(){
-    return new Promise(function(resolve, reject){
+module.exports.getAllPosts = () => {
+    return new Promise((resolve, reject) => {
         if (posts.length > 0) { resolve(posts); }
         else reject("No results returned");
     });
 }
 
-module.exports.getPublishedPosts = function(){
+module.exports.getPublishedPosts = () => {
     let publishedPosts = new Array();
-    return new Promise(function(resolve, reject){
+    return new Promise((resolve, reject) => {
         posts.forEach(element => {
             if (element.published == true) publishedPosts.push(element);})
         if (publishedPosts.length > 0) { resolve(publishedPosts); }
@@ -44,15 +44,15 @@ module.exports.getPublishedPosts = function(){
     });
 }
 
-module.exports.getCategories = function(){
-    return new Promise(function(resolve, reject){
+module.exports.getCategories = () => {
+    return new Promise((resolve, reject) => {
         if (categories.length > 0) { resolve(categories); }
         else reject("No results returned");
     });
 }
 
-module.exports.addPost = function(postData){
-    return new Promise(function(resolve, reject){
+module.exports.addPost = (postData) => {
+    return new Promise((resolve, reject) => {
         postData.published = postData.published === undefined ? false : true;
         postData.id = posts.length + 1;
         posts.push(postData);
@@ -60,8 +60,8 @@ module.exports.addPost = function(postData){
     });
 }
 
-module.exports.getPostsByCategory = function(category){
-    return new Promise(function(resolve,reject){
+module.exports.getPostsByCategory = (category) => {
+    return new Promise((resolve,reject) => {
         let sortedByCategory = new Array();
         posts.forEach(element => {
             if (element.category == category) sortedByCategory.push(element);})
@@ -70,7 +70,7 @@ module.exports.getPostsByCategory = function(category){
 }
 
 module.exports.getPostsByMinDate = function(minDateStr){
-    return new Promise(function(resolve,reject){
+    return new Promise((resolve,reject) => {
         let sortedByDate = new Array();
         posts.forEach(element => {
             if(new Date(element.postDate) >= new Date(minDateStr)) sortedByDate.push(element);})
@@ -78,8 +78,8 @@ module.exports.getPostsByMinDate = function(minDateStr){
     });
 }
 
-module.exports.getPostById = function(id){
-    return new Promise(function(resolve,reject){
+module.exports.getPostById = (id) => {
+    return new Promise((resolve,reject) => {
         let sortedById = new Array();
         posts.forEach(element => {
             if (element.id == id) sortedById.push(element);})
