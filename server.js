@@ -147,10 +147,10 @@ app.get('/blog/:id', async (req, res) => {
         // if there's a "category" query, filter the returned posts by category
         if(req.query.category){
             // Obtain the published "posts" by category
-            posts = await blogData.getPublishedPostsByCategory(req.query.category);
+            posts = await blog.getPublishedPostsByCategory(req.query.category);
         }else{
             // Obtain the published "posts"
-            posts = await blogData.getPublishedPosts();
+            posts = await blog.getPublishedPosts();
         }
         // sort the published posts by postDate
         posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
@@ -161,13 +161,13 @@ app.get('/blog/:id', async (req, res) => {
     }
     try{
         // Obtain the post by "id"
-        viewData.post = await blogData.getPostById(req.params.id);
+        viewData.post = await blog.getPostById(req.params.id);
     }catch(err){
         viewData.message = "no results"; 
     }
     try{
         // Obtain the full list of "categories"
-        let categories = await blogData.getCategories();
+        let categories = await blog.getCategories();
         // store the "categories" data in the viewData object (to be passed to the view)
         viewData.categories = categories;
     }catch(err){
