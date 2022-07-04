@@ -33,7 +33,7 @@ cloudinary.config({
 const exphbs = require('express-handlebars')
 app.engine('.hbs', exphbs.engine({ 
   extname: '.hbs',
-  // defaultLayout: 'main',
+  defaultLayout: 'main'
   // layoutsDir: 'views/layouts',
   // partialsDir: 'views/partials'
 }))
@@ -53,14 +53,12 @@ app.get('/', (req,res) => {
 
 // Renders "About" view
 app.get('/about', (req,res) => {
-    res.render('about', {
-        layout: 'main'
-    })
+    res.render('about');
 });
 
-// Returns HTML "Add post" form
+// Renders "Add post" view
 app.get('/posts/add', (req,res) => {
-    res.sendFile(path.join(__dirname, '/views/addPost.html'));
+    res.render('addPost');
 });
 
 // Returns a JSON formatted string containing all of the posts where published == true
