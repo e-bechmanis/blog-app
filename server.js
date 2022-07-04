@@ -1,5 +1,5 @@
 /*********************************************************************************
-*  WEB322 – Assignment 03
+*  WEB322 – Assignment 04
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
@@ -33,7 +33,25 @@ cloudinary.config({
 const exphbs = require('express-handlebars')
 app.engine('.hbs', exphbs.engine({ 
   extname: '.hbs',
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  helpers: {
+    //automatically renders the correct <li> element adding the class "active" if app.locals.activeRoute matches the provided url
+    navLink: function(url, options){
+        return '<li' + 
+            ((url == app.locals.activeRoute) ? ' class="active" ' : '') + 
+            '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+    },
+    //evaluates conditions for equality
+    equal: function (lvalue, rvalue, options) {
+        if (arguments.length< 3)
+            throw new Error("Handlebars Helper equal needs 2 parameters");
+        if (lvalue != rvalue) {
+            return options.inverse(this);
+        } else {
+            return options.fn(this);
+        }
+    }    
+  }
   // layoutsDir: 'views/layouts',
   // partialsDir: 'views/partials'
 }))
@@ -45,6 +63,14 @@ function onHttpStart() {
 }
 
 app.use(express.static('public'));
+
+//adds the property "activeRoute" to "app.locals" whenever the route changes
+app.use(function(req,res,next){
+    let route = req.path.substring(1);
+app.locals.activeRoute = (route == "/") ? "/" : "/" + route.replace(/\/(.*)/, "");
+app.locals.viewingCategory = req.query.category;
+next();
+});
 
 // Redirects '/' route to '/about' route
 app.get('/', (req,res) => {
