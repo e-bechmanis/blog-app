@@ -28,7 +28,16 @@ cloudinary.config({
     api_key: '123182823811362',
     api_secret: 'YZ1Nu29YsqoRmPnfWYH3h7ayYB8',
     secure: true
-    });    
+});
+
+const exphbs = require('express-handlebars')
+app.engine('.hbs', exphbs.engine({ 
+  extname: '.hbs',
+  // defaultLayout: 'main',
+  // layoutsDir: 'views/layouts',
+  // partialsDir: 'views/partials'
+}))
+app.set('view engine', '.hbs')
 
 // this function will be called after the http server starts listening for requests
 function onHttpStart() {
@@ -42,9 +51,11 @@ app.get('/', (req,res) => {
     res.redirect('/about');
 });
 
-// Returns HTML "About" form
+// Renders "About" view
 app.get('/about', (req,res) => {
-    res.sendFile(path.join(__dirname, '/views/about.html'));
+    res.render('about', {
+        layout: 'main'
+    })
 });
 
 // Returns HTML "Add post" form
