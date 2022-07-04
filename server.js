@@ -129,8 +129,8 @@ app.get('/posts', (req,res) => {
 // Returns a JSON formatted string containing all of the categories within the categories.json file
 app.get('/categories', (req,res) => {
     blog.getCategories()
-    .then((data)=>res.json(data))
-    .catch((error) => res.json({message: error}));
+    .then((data)=>res.render("categories", {categories: data}))
+    .catch((error) => res.render("categories", {message: error}))
 });
 
 app.post('/posts/add', upload.single("featureImage"), (req,res) => {
