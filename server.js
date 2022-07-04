@@ -107,22 +107,22 @@ app.get('/post/:value', (req,res) => {
 app.get('/posts', (req,res) => {
     if(req.query.category){ //optional filter, returns posts by category
         blog.getPostsByCategory(req.query.category).then((data) => {
-            res.json(data)
+            res.render("posts", {posts: data})
         }).catch((error) => {
-            res.json({message: error})
+            res.render("posts", {message: error})
         });
     }
     else if (req.query.minDate){ //optional filter, returns posts newer than the date passed in a query
         blog.getPostsByMinDate(req.query.minDate).then((data) =>{
-            res.json(data)
+            res.render("posts", {posts: data})
         }).catch((error) => {
-            res.json({message: error})
+            res.render("posts", {message: error})
         });
     }
     else{
         blog.getAllPosts()
-    .then((data)=>res.json(data))
-    .catch((error) => res.json({message: error}));
+    .then((data)=>res.render("posts", {posts: data}))
+    .catch((error) => res.render("posts", {message: error}));
     }
 });
 
