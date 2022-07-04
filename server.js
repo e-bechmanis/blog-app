@@ -3,7 +3,7 @@
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Elena Bechmanis     Student ID: 165090218      Date: 19.06.2022
+*  Name: Elena Bechmanis     Student ID: 165090218      Date: 04.07.2022
 *
 *  Online (Heroku) URL: https://still-woodland-36555.herokuapp.com/
 *
@@ -20,6 +20,7 @@ const multer = require("multer");
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const upload = multer();
+const stripJs = require('strip-js');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
@@ -50,7 +51,10 @@ app.engine('.hbs', exphbs.engine({
         } else {
             return options.fn(this);
         }
-    }    
+    },
+    safeHTML: function(context){
+        return stripJs(context);
+    }
   }
   // layoutsDir: 'views/layouts',
   // partialsDir: 'views/partials'
@@ -87,11 +91,42 @@ app.get('/posts/add', (req,res) => {
     res.render('addPost');
 });
 
-// Returns a JSON formatted string containing all of the posts where published == true
-app.get('/blog', (req,res) => {
-    blog.getPublishedPosts()
-    .then((data)=>res.json(data))
-    .catch((error) => res.json({message: error}));
+app.get('/blog', async (req, res) => {
+    // Declare an object to store properties for the view
+    let viewData = {};
+    try{
+        // declare empty array to hold "post" objects
+        let posts = [];
+        // if there's a "category" query, filter the returned posts by category
+        if(req.query.category){
+            // Obtain the published "posts" by category
+            posts = await blog.getPublishedPostsByCategory(req.query.category);
+        }else{
+            // Obtain the published "posts"
+            posts = await blog.getPublishedPosts();
+        }
+        // sort the published posts by postDate
+        posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
+        // get the latest post from the front of the list (element 0)
+        let post = posts[0]; 
+        // store the "posts" and "post" data in the viewData object (to be passed to the view)
+        viewData.posts = posts;
+        viewData.post = post;
+
+    }catch(err){
+        viewData.message = "no results";
+    }
+    try{
+        // Obtain the full list of "categories"
+        let categories = await blog.getCategories();
+        // store the "categories" data in the viewData object (to be passed to the view)
+        viewData.categories = categories;
+    }catch(err){
+        viewData.categoriesMessage = "no results"
+    }
+    // render the "blog" view with all of the data (viewData)
+    res.render("blog", {data: viewData})
+
 });
 
 //Returns a single post by ID
@@ -101,6 +136,45 @@ app.get('/post/:value', (req,res) => {
     }).catch((error) => {
         res.json({message: error})
     });
+});
+
+app.get('/blog/:id', async (req, res) => {
+    // Declare an object to store properties for the view
+    let viewData = {};
+    try{
+        // declare empty array to hold "post" objects
+        let posts = [];
+        // if there's a "category" query, filter the returned posts by category
+        if(req.query.category){
+            // Obtain the published "posts" by category
+            posts = await blogData.getPublishedPostsByCategory(req.query.category);
+        }else{
+            // Obtain the published "posts"
+            posts = await blogData.getPublishedPosts();
+        }
+        // sort the published posts by postDate
+        posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
+        // store the "posts" and "post" data in the viewData object (to be passed to the view)
+        viewData.posts = posts;
+    }catch(err){
+        viewData.message = "no results";
+    }
+    try{
+        // Obtain the post by "id"
+        viewData.post = await blogData.getPostById(req.params.id);
+    }catch(err){
+        viewData.message = "no results"; 
+    }
+    try{
+        // Obtain the full list of "categories"
+        let categories = await blogData.getCategories();
+        // store the "categories" data in the viewData object (to be passed to the view)
+        viewData.categories = categories;
+    }catch(err){
+        viewData.categoriesMessage = "no results"
+    }
+    // render the "blog" view with all of the data (viewData)
+    res.render("blog", {data: viewData})
 });
 
 //Returns blog posts in JSON format with optional filters by date and category

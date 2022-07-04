@@ -69,6 +69,15 @@ module.exports.getPostsByCategory = (category) => {
     });
 }
 
+module.exports.getPublishedPostsByCategory = (category) => {
+    return new Promise((resolve,reject) => {
+        let sortedPublishedByCategory = new Array();
+        posts.forEach(element => {
+            if (element.category == category && element.published == true) sortedPublishedByCategory.push(element);})
+        sortedByCategory.length === 0 ? reject("No results returned") : resolve(sortedByCategory);
+    });
+}
+
 module.exports.getPostsByMinDate = function(minDateStr){
     return new Promise((resolve,reject) => {
         let sortedByDate = new Array();
