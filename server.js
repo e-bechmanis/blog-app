@@ -148,7 +148,6 @@ app.get('/blog/:id', async (req, res) => {
         if(req.query.category){
             // Obtain the published "posts" by category
             posts = await blog.getPublishedPostsByCategory(req.query.category);
-            console.log(posts);
         }else{
             // Obtain the published "posts"
             posts = await blog.getPublishedPosts();

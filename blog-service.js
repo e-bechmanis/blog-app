@@ -90,9 +90,9 @@ module.exports.getPostsByMinDate = function(minDateStr){
 
 module.exports.getPostById = (id) => {
     return new Promise((resolve,reject) => {
-        let sortedById = new Array();
+        let sortedById = {};
         posts.forEach(element => {
-            if (element.id == id) sortedById.push(element);})
-        sortedById.length === 0 ? reject("No results returned") : resolve(sortedById);
+            if (element.id == id) sortedById = element;})
+        Object.keys(sortedById).length === 0 ? reject("No results returned") : resolve(sortedById);
     });
 }
