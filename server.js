@@ -71,9 +71,9 @@ app.use(express.static('public'));
 //adds the property "activeRoute" to "app.locals" whenever the route changes
 app.use(function(req,res,next){
     let route = req.path.substring(1);
-app.locals.activeRoute = (route == "/") ? "/" : "/" + route.replace(/\/(.*)/, "");
-app.locals.viewingCategory = req.query.category;
-next();
+    app.locals.activeRoute = "/" + (isNaN(route.split('/')[1]) ? route.replace(/\/(?!.*)/, "") : route.replace(/\/(.*)/, ""));
+    app.locals.viewingCategory = req.query.category;
+    next();
 });
 
 // Redirects '/' route to '/about' route
