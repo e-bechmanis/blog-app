@@ -55,6 +55,7 @@ module.exports.addPost = (postData) => {
     return new Promise((resolve, reject) => {
         postData.published = postData.published === undefined ? false : true;
         postData.id = posts.length + 1;
+        postData.postDate = new Date().getFullYear()+'-'+("0"+(new Date().getMonth()+1)).slice(-2)+'-'+("0"+ new Date().getDate()).slice(-2);
         posts.push(postData);
         resolve(postData);
     });
@@ -74,7 +75,7 @@ module.exports.getPublishedPostsByCategory = (category) => {
         let sortedPublishedByCategory = new Array();
         posts.forEach(element => {
             if (element.category == category && element.published == true) sortedPublishedByCategory.push(element);})
-        sortedByCategory.length === 0 ? reject("No results returned") : resolve(sortedByCategory);
+        sortedPublishedByCategory.length === 0 ? reject("No results returned") : resolve(sortedPublishedByCategory);
     });
 }
 

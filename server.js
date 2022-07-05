@@ -78,7 +78,7 @@ next();
 
 // Redirects '/' route to '/about' route
 app.get('/', (req,res) => {
-    res.redirect('/about');
+    res.redirect('/blog');
 });
 
 // Renders "About" view
@@ -148,9 +148,11 @@ app.get('/blog/:id', async (req, res) => {
         if(req.query.category){
             // Obtain the published "posts" by category
             posts = await blog.getPublishedPostsByCategory(req.query.category);
+            console.log(posts);
         }else{
             // Obtain the published "posts"
             posts = await blog.getPublishedPosts();
+           
         }
         // sort the published posts by postDate
         posts.sort((a,b) => new Date(b.postDate) - new Date(a.postDate));
@@ -248,7 +250,7 @@ app.post('/posts/add', upload.single("featureImage"), (req,res) => {
 
 //The 404 Route
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/404.html'));
+    res.render("404.hbs");
   });
 
 // setup http server to listen on HTTP_PORT
