@@ -1,98 +1,116 @@
-const { rejects } = require("assert");
-const fs = require("fs"); 
-const { resolve } = require("path");
+const Sequelize = require('sequelize');
+var sequelize = newSequelize('d8dmerf5gtk8d1', 'wcobxxvooxryhg', 'e1cced2532c37f64f4dc30637cd9835d8c4464bf4d3a3288d8fb96695c90fb11', {
+    host: 'ec2-54-159-22-90.compute-1.amazonaws.com',
+    dialect: 'postgres',
+    port: 5432,
+    dialectOptions: {
+        ssl: { rejectUnauthorized: false }
+    },
+    query: { raw: true }
+});
 
-let posts = new Array();
-let categories = new Array();
+// Define a "Post" model
+var Post = sequelize.define('Post', {
+    body: Sequelize.TEXT,
+    title: Sequelize.STRING,
+    postDate: Sequelize.DATE,
+    featureImage: Sequelize.STRING,
+    published: Sequelize.BOOLEAN
+});
+
+// Define a "Category" model
+var Category = sequelize.define('Category', {
+    category: Sequelize.STRING
+});
+
+Post.belongsTo(Category, {foreignKey: 'category'});
 
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
-    fs.readFile('./data/posts.json', 'utf8', (err, data) => {
-        if (err) {
-            reject("Could not open the first file");
-        }
-        else{
-            posts = JSON.parse(data);
-            fs.readFile('./data/categories.json', 'utf8', (err, cat) =>{
-                if (err) {
-                    reject("Could not open the second file");
-                }
-                else{
-                    categories = JSON.parse(cat);
-                    resolve(data, cat);
-                }
-            });
-        }
-    });
-})
+        sequelize.sync().then(resolve);
+        reject("Unable to sync the database");
+        });        
 }
 
 module.exports.getAllPosts = () => {
     return new Promise((resolve, reject) => {
-        if (posts.length > 0) { resolve(posts); }
-        else reject("No results returned");
-    });
+        Post.findAll().then(resolve(data));
+        reject("No results returned");
+        });    
 }
 
 module.exports.getPublishedPosts = () => {
-    let publishedPosts = new Array();
     return new Promise((resolve, reject) => {
-        posts.forEach(element => {
-            if (element.published == true) publishedPosts.push(element);})
-        if (publishedPosts.length > 0) { resolve(publishedPosts); }
-        else reject("No results returned");
-    });
+        Post.findAll({
+            attributes: ['published'],
+            where: {
+                id: true
+            }
+        }).then(resolve(data));
+        reject("No results returned");
+        });     
 }
 
 module.exports.getCategories = () => {
     return new Promise((resolve, reject) => {
-        if (categories.length > 0) { resolve(categories); }
-        else reject("No results returned");
-    });
+        reject();
+        });    
 }
 
 module.exports.addPost = (postData) => {
     return new Promise((resolve, reject) => {
-        postData.published = postData.published === undefined ? false : true;
-        postData.id = posts.length + 1;
-        postData.postDate = new Date().getFullYear()+'-'+("0"+(new Date().getMonth()+1)).slice(-2)+'-'+("0"+ new Date().getDate()).slice(-2);
-        posts.push(postData);
-        resolve(postData);
-    });
+        postData.published = (postData.published) ? true : false;
+        for (const prop in postData) {
+            if (postData[prop] === ""){
+                postData[prop] = null;
+            }
+        }
+        postData.postDate = new Date();
+        Post.create().then(resolve);
+        reject("Unable to create post");
+        });    
 }
 
 module.exports.getPostsByCategory = (category) => {
-    return new Promise((resolve,reject) => {
-        let sortedByCategory = new Array();
-        posts.forEach(element => {
-            if (element.category == category) sortedByCategory.push(element);})
-        sortedByCategory.length === 0 ? reject("No results returned") : resolve(sortedByCategory);
-    });
+    return new Promise((resolve, reject) => {
+        Post.findAll({
+            attributes: ['category'],
+            where: {
+                id: category
+            }
+        }).then(resolve(data));
+        reject("No results returned");
+        });    
 }
 
 module.exports.getPublishedPostsByCategory = (category) => {
-    return new Promise((resolve,reject) => {
-        let sortedPublishedByCategory = new Array();
-        posts.forEach(element => {
-            if (element.category == category && element.published == true) sortedPublishedByCategory.push(element);})
-        sortedPublishedByCategory.length === 0 ? reject("No results returned") : resolve(sortedPublishedByCategory);
-    });
+    return new Promise((resolve, reject) => {
+        reject();
+        });    
 }
 
 module.exports.getPostsByMinDate = function(minDateStr){
-    return new Promise((resolve,reject) => {
-        let sortedByDate = new Array();
-        posts.forEach(element => {
-            if(new Date(element.postDate) >= new Date(minDateStr)) sortedByDate.push(element);})
-        sortedByDate.length === 0 ? reject("No results returned") : resolve(sortedByDate);
-    });
+    return new Promise((resolve, reject) => {
+        const { gte } = Sequelize.Op;
+        Post.findAll({
+            where: {
+                postDate: {
+                [gte]: new Date(minDateStr)
+            }
+        }
+        }).then(resolve(data));
+        reject("No results returned");
+        });       
 }
 
 module.exports.getPostById = (id) => {
-    return new Promise((resolve,reject) => {
-        let sortedById = {};
-        posts.forEach(element => {
-            if (element.id == id) sortedById = element;})
-        Object.keys(sortedById).length === 0 ? reject("No results returned") : resolve(sortedById);
-    });
+    return new Promise((resolve, reject) => {
+        Post.findAll({
+            attributes: ['id'],
+            where: {
+                id: id
+            }
+        }).then(resolve(data[0]));
+        reject("No results returned");
+        });      
 }
