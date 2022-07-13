@@ -187,22 +187,28 @@ app.get('/blog/:id', async (req, res) => {
 //Returns blog posts in JSON format with optional filters by date and category
 app.get('/posts', (req,res) => {
     if(req.query.category){ //optional filter, returns posts by category
-        blog.getPostsByCategory(req.query.category).then((data) => {
+        blog.getPostsByCategory(req.query.category).then((data) => 
+        {if(data.length> 0) 
             res.render("posts", {posts: data})
-        }).catch((error) => {
+        else
+            res.render("posts",{ message: "no results" });}
+            ).catch((error) => {
             res.render("posts", {message: error})
         });
     }
     else if (req.query.minDate){ //optional filter, returns posts newer than the date passed in a query
-        blog.getPostsByMinDate(req.query.minDate).then((data) =>{
+        blog.getPostsByMinDate(req.query.minDate).then((data) =>
+        {if(data.length> 0) 
             res.render("posts", {posts: data})
-        }).catch((error) => {
-            res.render("posts", {message: error})
-        });
+        else
+            res.render("posts",{ message: "no results" });});
     }
     else{
         blog.getAllPosts()
-    .then((data)=>res.render("posts", {posts: data}))
+    .then((data)=> {if(data.length> 0) 
+        res.render("posts", {posts: data})
+    else
+        res.render("posts",{ message: "no results" });})
     .catch((error) => res.render("posts", {message: error}));
     }
 });
@@ -210,7 +216,10 @@ app.get('/posts', (req,res) => {
 // Returns a JSON formatted string containing all of the categories within the categories.json file
 app.get('/categories', (req,res) => {
     blog.getCategories()
-    .then((data)=>res.render("categories", {categories: data}))
+    .then((data)=>{if(data.length> 0) 
+        res.render("categories", {categories: data})
+    else
+        res.render("categories",{ message: "no results" });})
     .catch((error) => res.render("categories", {message: error}))
 });
 
@@ -261,4 +270,4 @@ app.get('*', (req, res) => {
 // setup http server to listen on HTTP_PORT
 blog.initialize()
 .then(()=> app.listen(HTTP_PORT, onHttpStart))
-.catch((error)=>res.json({message: error}));
+.catch((error)=>console.log(error));

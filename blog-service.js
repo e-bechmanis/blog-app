@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-var sequelize = newSequelize('d8dmerf5gtk8d1', 'wcobxxvooxryhg', 'e1cced2532c37f64f4dc30637cd9835d8c4464bf4d3a3288d8fb96695c90fb11', {
+var sequelize = new Sequelize('d8dmerf5gtk8d1', 'wcobxxvooxryhg', 'e1cced2532c37f64f4dc30637cd9835d8c4464bf4d3a3288d8fb96695c90fb11', {
     host: 'ec2-54-159-22-90.compute-1.amazonaws.com',
     dialect: 'postgres',
     port: 5432,
@@ -53,8 +53,9 @@ module.exports.getPublishedPosts = () => {
 
 module.exports.getCategories = () => {
     return new Promise((resolve, reject) => {
-        reject();
-        });    
+        Category.findAll().then(resolve(data));
+        reject("No results returned");
+        });
 }
 
 module.exports.addPost = (postData) => {
@@ -85,7 +86,15 @@ module.exports.getPostsByCategory = (category) => {
 
 module.exports.getPublishedPostsByCategory = (category) => {
     return new Promise((resolve, reject) => {
-        reject();
+        Post.findAll({
+            //attributes: ['published'],
+            where:
+            { $and: [ { published: true }, { category: category } ] } 
+            //where: {
+              //  id: true
+            //}
+        }).then(resolve(data));
+        reject("No results returned");
         });    
 }
 
