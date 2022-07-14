@@ -62,8 +62,6 @@ app.engine('.hbs', exphbs.engine({
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2,'0')}`;
     }    
   }
-  // layoutsDir: 'views/layouts',
-  // partialsDir: 'views/partials'
 }))
 app.set('view engine', '.hbs')
 
@@ -73,6 +71,7 @@ function onHttpStart() {
 }
 
 app.use(express.static('public'));
+app.use(express.urlencoded({extended: true}));
 
 //adds the property "activeRoute" to "app.locals" whenever the route changes
 app.use(function(req,res,next){
@@ -95,6 +94,11 @@ app.get('/about', (req,res) => {
 // Renders "Add post" view
 app.get('/posts/add', (req,res) => {
     res.render('addPost');
+});
+
+// Renders "Add category" view
+app.get('/categories/add', (req,res) => {
+    res.render('addCategory');
 });
 
 app.get('/blog', async (req, res) => {
@@ -260,6 +264,22 @@ app.post('/posts/add', upload.single("featureImage"), (req,res) => {
     // Process the req.body and add it as a new Blog Post before redirecting to /posts
     blog.addPost(req.body).then(()=>res.redirect('/posts'));
     }     
+});
+
+app.post('/categories/add', (req,res) => {
+    // Process the req.body and add it as a new Category before redirecting to /categories
+    blog.addCategory(req.body).then(()=>res.redirect('/categories'));
+});
+//Deletes category by ID
+app.get('/categories/delete/:id', (req,res) => {
+    blog.deleteCategoryById(req.params.id).then(()=>res.redirect('/categories'))
+    .catch((error) => res.status(500).send('Unable to Remove Category / Category not found'));
+});
+
+//Deletes post by ID
+app.get('/posts/delete/:id', (req,res) => {
+    blog.deletePostById(req.params.id).then(()=>res.redirect('/posts'))
+    .catch((error) => res.status(500).send('Unable to Remove Post / Post not found'));
 });
 
 //The 404 Route

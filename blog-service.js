@@ -123,3 +123,33 @@ module.exports.getPostById = (id) => {
         reject("No results returned");
         });      
 }
+
+module.exports.addCategory = (categoryData) =>{
+    return new Promise((resolve, reject) => {
+        for (const prop in categoryData) {
+            if (categoryData[prop] === ""){
+                categoryData[prop] = null;
+            }
+        }
+        Category.create().then(resolve);
+        reject("Unable to create category");
+        });    
+}
+
+module.exports.deleteCategoryById = (id) => {
+    return new Promise((resolve, reject) => {
+        Category.destroy({
+            where: { id: id }
+        }).then(resolve);
+        reject("Error while trying to delete category");
+        });
+}
+
+module.exports.deletePostById = (id) => {
+    return new Promise((resolve, reject) => {
+        Post.destroy({
+            where: { id: id }
+        }).then(resolve);
+        reject("Error while trying to delete post");
+        });
+}
