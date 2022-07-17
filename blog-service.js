@@ -33,7 +33,7 @@ var Category = sequelize.define('Category', {
     category: Sequelize.STRING
 });
 
-Post.belongsTo(Category, {foreignKey: 'id'});
+Post.belongsTo(Category, {foreignKey: 'category'});
 
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
