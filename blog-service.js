@@ -93,7 +93,7 @@ module.exports.getPublishedPostsByCategory = (category) => {
     return new Promise((resolve, reject) => {
         Post.findAll({
             where:
-            { $and: [ { published: true }, { category: category } ] } 
+            { published: true, category: category } 
         }).then((data) => {resolve(data)})
         .catch((err) => reject("No results returned"));
         });    
