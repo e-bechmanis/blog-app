@@ -4,9 +4,9 @@
     color: rgb(29, 86, 245);
 }
 
-section h2{
+/*section h2{
     color: rgb(8, 42, 138);
-}
+}*/
 
 .navbar-default .navbar-brand{
     color: rgb(8, 42, 138);
@@ -49,7 +49,30 @@ html{
     height: 100%;
 }
 
-#not-found a {
-    color: inherit;
+.myBtn{
+    background-color: rgb(243, 150, 87);
+    box-shadow: 0 5px 0 rgb(113, 149, 248);
+    color: white;
+    padding: 0.7em 1.2em;
+    float: right !important;
+    display: inline;
+    text-decoration: none;
+    font-size: 0.5em;
+    border-radius: 0.25rem;
+}
+
+.myBtn:hover {
+    background-color: rgb(113, 149, 248);
     text-decoration: none;
 }
+
+.myBtn:visited, .myBtn:hover, .myBtn:active {
+    color: white;
+}
+
+.btn {
+    background-color: rgb(122, 121, 120);
+    box-shadow: 0 5px 0 rgb(75, 76, 77);
+    border: none;
+}
+  
