@@ -1,9 +1,9 @@
 /*********************************************************************************
-*  WEB322 – Assignment 05
+*  WEB322 – Assignment 06
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
-*  Name: Elena Bechmanis     Student ID: 165090218      Date: 16.07.2022
+*  Name: Elena Bechmanis     Student ID: 165090218      Date: 03.08.2022
 *
 *  Online (Heroku) URL: https://still-woodland-36555.herokuapp.com/
 *
@@ -21,6 +21,7 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const upload = multer();
 const stripJs = require('strip-js');
+const authData = require('auth-service.js');
 
 var HTTP_PORT = process.env.PORT || 8080;
 
