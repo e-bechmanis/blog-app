@@ -21,7 +21,7 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const upload = multer();
 const stripJs = require('strip-js');
-const authData = require('auth-service.js');
+const authData = require('./auth-service.js');
 const clientSessions = require('client-sessions');
 
 var HTTP_PORT = process.env.PORT || 8080;
