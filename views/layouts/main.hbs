@@ -51,13 +51,13 @@
           </ul>
           {{/if}}
 
-          {{#if session.user}}
+          {{#unless session.user}}
           <form class="navbar-form navbar-right">
             <a href="/register" class="btnbtn-success"><span class="glyphiconglyphicon-cog"></span>&nbsp;&nbsp;Register</a>
             <a href="/login" class="btnbtn-primary"><span class="glyphiconglyphicon-chevron-right"></span>&nbsp;&nbsp;Log In</a>
           </form>
-          {{/if}}
-          
+          {{/unless}}
+
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
