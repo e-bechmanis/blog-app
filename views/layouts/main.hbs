@@ -49,14 +49,12 @@
             {{#navLink "/posts"}}Posts{{/navLink}}
             {{#navLink "/categories"}}Categories{{/navLink}}
           </ul>
-          {{/if}}
-
-          {{#unless session.user}}
+          {{else}}
           <form class="navbar-form navbar-right">
             <a href="/register" class="btnbtn-success"><span class="glyphiconglyphicon-cog"></span>&nbsp;&nbsp;Register</a>
             <a href="/login" class="btnbtn-primary"><span class="glyphiconglyphicon-chevron-right"></span>&nbsp;&nbsp;Log In</a>
           </form>
-          {{/unless}}
+          {{/if}}
 
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
