@@ -12,7 +12,7 @@
     <div class="row">
          <div class="col-md-12">
              <div class="form-group">
-                 <input class="form-control" id="userName" name="userName" type="text" placeholder="User Name" required value={{userName}}
+                 <input class="form-control" id="userName" name="userName" type="text" placeholder="User Name" required value={{#if user.userName}}{{user.userName}}{{/if}}""
                    />
              </div>
          </div>
