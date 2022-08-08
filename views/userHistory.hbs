@@ -13,10 +13,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each session.user.loginHistory}}
                     <tr>
-                        <td>{{session.user.userHistory.dateTime}}</td>
-                        <td>{{session.user.userHistory.userAgent}}</td>
+                        <td>{{dateTime}}</td>
+                        <td>{{userAgent}}</td>
                     </tr>
+                    {{/each}}
                 </tbody>
             </table>
         </div>
