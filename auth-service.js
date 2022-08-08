@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var userSchema = new Schema({
@@ -19,12 +20,13 @@ module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
         let db = mongoose.createConnection("mongodb+srv://dbUser:WEB322-Elena@senecaweb.i4mq2qu.mongodb.net/?retryWrites=true&w=majority");
 
-db.on('error', (err)=>{
+    db.on('error', (err)=>{
             reject(err); // reject the promise with the provided error
         });
-db.once('open', ()=>{
+    db.once('open', ()=>{
            User = db.model("users", userSchema);
-resolve();
+           console.log("Mongo DB successfully connected");
+           resolve();
         });
     });
 };
@@ -35,18 +37,23 @@ module.exports.registerUser = (userData) => {
             reject("Passwords do not match");
         } 
         else {
-            let newUser = new User(userData);
-            newUser.save((err) => {
-                if (err) {
-                    if(err.code == 11000) {
-                        reject("Username already taken");
-                    } 
-                    else {
-                        reject("There was an error creating the user: " + err)
+            bcrypt.hash(userData.password, 10).then((hash) => {
+                userData.password = hash;
+                let newUser = new User(userData);
+                newUser.save((err) => {
+                    if (err) {
+                        if(err.code == 11000) {
+                            reject("Username already taken");
+                        } 
+                        else {
+                            reject("There was an error creating the user: " + err);
+                        }
+                    } else {
+                        resolve();
                     }
-                } else {
-                    resolve()
-                }
+                })
+            }).catch((error) => {
+                reject("There was an error encrypting the password: " + error);
             })
         }
     });
@@ -54,29 +61,32 @@ module.exports.registerUser = (userData) => {
 
 module.exports.checkUser = (userData) => {
     return new Promise((resolve, reject) => {
-        User.find({ userName: userData.userName})
+        User.findOne({ userName: userData.userName})
         .exec()
-        .then((users) => { // users will be an array of objects.
-            if (users.length === 0){
+        .then((user) => { // users will be an array of objects.
+            if (!user){
                 reject ("Unable to find user: " + userData.userName);
             }
-            else if (users[0].password !== userData.password) {
-                reject("Incorrect Password for user: " + userData.userName);
-            }
             else {
-                users[0].loginHistory.push({dateTime: (new Date()).toString(), userAgent: userData.userAgent});
-                User.updateOne(
-                    { userName : users[0].userName },
-                    { $set : { loginHistory : users[0].loginHistory} }
-                ).exec()
-                .then(() => { resolve(users[0]) })
-                .catch((err) => {
-                    reject("There was an error verifying the user: " + err);
-                });
+                bcrypt.compare(userData.password, user.password).then((result) => {
+                    if (result === true){
+                        //save session
+                        console.log(user);
+                        user.loginHistory.push({dateTime: (new Date()).toString(), userAgent: userData.userAgent});
+                        // update user login history
+                        User.updateOne(
+                            { userName : user.userName },
+                            { $set : { loginHistory : user.loginHistory} }
+                        ).exec()
+                        .then(() => { resolve(user) })
+                        .catch((err) => {
+                            reject("There was an error verifying the user: " + err);
+                        });
+                    }
+                }).catch((error) => {
+                    reject("Incorrect Password for user: " + userData.userName);
+                })
             }
-        })
-        .catch((err) => {
-            reject("Unable to find user: " + userData.userName);
         });
     });
 }
