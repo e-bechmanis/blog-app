@@ -1,78 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Anek+Odia:wght@300;400;500&family=Fira+Code:wght@300;400;500&family=Quantico:ital,wght@0,700;1,400&display=swap');
 
 #name{
-    color: rgb(29, 86, 245);
-}
-
-/*section h2{
-    color: rgb(8, 42, 138);
-}*/
-
-.navbar-default .navbar-brand{
-    color: rgb(8, 42, 138);
+    color: rgb(216, 147, 19);
     font-family: 'Quantico', sans-serif;
     font-weight: 700;
-}
-
-.navbar-default{
-    background-color: rgb(207, 226, 248);
-}
-
-.navbar-default .navbar-nav > li > a{
-    color: rgb(8, 42, 138);
-}
-
-.row p{
-    color: rgb(71, 70, 70);
 }
 
 aside h2{
     color: rgb(211, 72, 17);
 }
-
-#not-found{
-    background: linear-gradient(135deg, #c8c3f3 0%, #03045a 100%);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    font-family: 'Quantico', sans-serif;
-    font-size: 25px;
-    height: 100%;
-    color: whitesmoke;
-    font-weight: 400;
-    margin-left: auto;
-    margin-right:auto;
-    margin-top: 200px;
-    text-align: center;
-}
-
-html{
-    height: 100%;
-}
-
-.myBtn{
-    background-color: rgb(243, 150, 87);
-    box-shadow: 0 5px 0 rgb(113, 149, 248);
-    color: white;
-    padding: 0.7em 1.2em;
-    float: right !important;
-    display: inline;
-    text-decoration: none;
-    font-size: 0.5em;
-    border-radius: 0.25rem;
-}
-
-.myBtn:hover {
-    background-color: rgb(113, 149, 248);
-    text-decoration: none;
-}
-
-.myBtn:visited, .myBtn:hover, .myBtn:active {
-    color: white;
-}
-
-.btn {
-    background-color: rgb(122, 121, 120);
-    box-shadow: 0 5px 0 rgb(75, 76, 77);
-    border: none;
-}
-  

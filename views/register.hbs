@@ -14,14 +14,14 @@
         <strong>Success:</strong> 
         {{successMessage}}
     </div>
-    <a class="btnbtn-success pull-right" href="/login">&nbsp;&nbsp;&nbsp;Proceed to Log in&nbsp;&nbsp;&nbsp;</a>
+    <a class="btn btn-warning float-end" href="/login"><i class="bi bi-check"></i>&nbsp;&nbsp;&nbsp;Proceed to Log in&nbsp;&nbsp;&nbsp;</a>
     <br />
     <br />
     <br />
     {{/if}}
     {{#unless successMessage}}
         <form method="post" action="/register">
-            <div class="row">
+            <div class="mb-2 row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <input class="form-control" id="userName" name="userName" type="text" placeholder="User Name" required value={{#if user.userName}}{{user.userName}}{{/if}}""
@@ -29,28 +29,28 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="mb-2 row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <input class="form-control" id="password" name="password" type="password" placeholder="Password" required />
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="mb-2 row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <input class="form-control" id="password2" name="password2" type="password" placeholder="Confirm Password" required />
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="mb-3 row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <input class="form-control" id="email" name="email" type="email" placeholder="Email Address" required />
                     </div>
                 </div>
             </div>
-            <input type="submit" class="btn btn-success pull-right" value="Register" />
+            <input type="submit" class="btn btn-primary float-end" value="Register" />
         </form>
     {{/unless}}
     </div>

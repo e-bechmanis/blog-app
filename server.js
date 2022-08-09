@@ -40,9 +40,7 @@ app.engine('.hbs', exphbs.engine({
   helpers: {
     //automatically renders the correct <li> element adding the class "active" if app.locals.activeRoute matches the provided url
     navLink: function(url, options){
-        return '<li' + 
-            ((url == app.locals.activeRoute) ? ' class="active" ' : '') + 
-            '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+        return '<li class="nav-item"><a class="btn btn-outline-secondary me-2 ' + ((url == app.locals.activeRoute) ? 'active" aria-current="page"' : '"') + ' href="' + url + '">' + options.fn(this) + '</a></li>';
     },
     //evaluates conditions for equality
     equal: function (lvalue, rvalue, options) {

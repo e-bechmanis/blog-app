@@ -3,6 +3,7 @@
         {{#if data.post}}
             <article>
                 <h2>{{data.post.title}}</h2>
+                <br>
                 <img src="{{data.post.featureImage}}" alt="feature Image" style="width:100%" />
                 <br /><br />
                 {{#safeHTML data.post.body}}{{/safeHTML}}

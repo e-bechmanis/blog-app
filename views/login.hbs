@@ -9,22 +9,22 @@
     </div>
   {{/if}}
   <form method="post" action="/login">
-    <div class="row">
-         <div class="col-md-12">
+    <div class="mb-1 row">
+         <div class="col-md-12 mb-3">
              <div class="form-group">
                  <input class="form-control" id="userName" name="userName" type="text" placeholder="User Name" required value={{#if user.userName}}{{user.userName}}{{/if}}""
                    />
              </div>
          </div>
     </div>
-    <div class="row">
+    <div class="mb-3 row">
          <div class="col-md-12">
             <div class="form-group">
                  <input class="form-control" id="password" name="password" type="password" placeholder="Password" required />
             </div>
          </div>
     </div>
-    <input type="submit" class="btn btn-success pull-right" value="Login" />
+    <input type="submit" class="btn btn-primary float-end" value="Login" />
   </form>
  </div>
 </div>
