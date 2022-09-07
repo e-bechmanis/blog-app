@@ -1,3 +1,6 @@
+const env = require("dotenv");
+env.config();
+
 const bcrypt = require('bcryptjs');
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
@@ -18,7 +21,7 @@ var userSchema = new Schema({
 
 module.exports.initialize = () => {
     return new Promise((resolve, reject) => {
-        let db = mongoose.createConnection("mongodb+srv://dbUser:WEB322-Elena@senecaweb.i4mq2qu.mongodb.net/?retryWrites=true&w=majority");
+        let db = mongoose.createConnection(process.env.MONGO_URI_STRING);
 
     db.on('error', (err)=>{
             reject(err); // reject the promise with the provided error
